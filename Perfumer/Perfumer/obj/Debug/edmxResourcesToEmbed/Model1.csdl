@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PerfumerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DatePost" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PointOfIssueId" Type="Int32" Nullable="false" />
+    <Property Name="FIOClient" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="CodeReceipt" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="PointOfIssue" Relationship="Self.FK__Order__PointOfIs__286302EC" FromRole="Order" ToRole="PointOfIssue" />
+    <NavigationProperty Name="OrderComposition" Relationship="Self.FK__OrderComp__Order__2E1BDC42" FromRole="Order" ToRole="OrderComposition" />
+  </EntityType>
+  <EntityType Name="OrderComposition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK__OrderComp__Order__2E1BDC42" FromRole="OrderComposition" ToRole="Order" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__OrderComp__Produ__2D27B809" FromRole="OrderComposition" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="PointOfIssue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Index" Type="Int32" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="House" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK__Order__PointOfIs__286302EC" FromRole="PointOfIssue" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Article" />
+    </Key>
+    <Property Name="Article" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Measure" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="MaxSale" Type="Int32" Nullable="false" />
+    <Property Name="Maker" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Provider" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sale" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="OrderComposition" Relationship="Self.FK__OrderComp__Produ__2D27B809" FromRole="Product" ToRole="OrderComposition" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Order__PointOfIs__286302EC">
+    <End Role="PointOfIssue" Type="Self.PointOfIssue" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PointOfIssue">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="PointOfIssueId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderComp__Order__2E1BDC42">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderComposition" Type="Self.OrderComposition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderComposition">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderComp__Produ__2D27B809">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="OrderComposition" Type="Self.OrderComposition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Article" />
+      </Principal>
+      <Dependent Role="OrderComposition">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PerfumerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Order" EntityType="Self.Order" />
+    <EntitySet Name="OrderComposition" EntityType="Self.OrderComposition" />
+    <EntitySet Name="PointOfIssue" EntityType="Self.PointOfIssue" />
+    <EntitySet Name="Product" EntityType="Self.Product" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK__Order__PointOfIs__286302EC" Association="Self.FK__Order__PointOfIs__286302EC">
+      <End Role="PointOfIssue" EntitySet="PointOfIssue" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderComp__Order__2E1BDC42" Association="Self.FK__OrderComp__Order__2E1BDC42">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderComposition" EntitySet="OrderComposition" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderComp__Produ__2D27B809" Association="Self.FK__OrderComp__Produ__2D27B809">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="OrderComposition" EntitySet="OrderComposition" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

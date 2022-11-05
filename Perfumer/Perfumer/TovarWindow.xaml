@@ -1,0 +1,19 @@
+﻿<Window x:Class="Perfumer.TovarWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Perfumer"
+        mc:Ignorable="d"
+        Title="Окно товаров" Height="450" Width="728" MaxHeight="500" MaxWidth="850" Icon="Resources/icon.ico" >
+    <Grid>
+        <Image Source="Resources/logo.png" HorizontalAlignment="Left" Height="100" Margin="10,39,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Здесь вы можете посмотреть все товары" HorizontalAlignment="Left" Margin="132,65,0,0" VerticalAlignment="Top" FontFamily="Candara" FontSize="20"/>
+        <Label  Name="NameLabel" Content="" HorizontalAlignment="Left" Margin="477,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.2,0.418"/>
+        <Button Content="Выход" HorizontalAlignment="Left" Margin="680,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <DataGrid Margin="0,144,10,10" Name="GridTovar" FontFamily="Candara">
+            
+        </DataGrid>
+
+    </Grid>
+</Window>

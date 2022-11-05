@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище PerfumerModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="DatePost" Type="date" Nullable="false" />
+    <Property Name="PointOfIssueId" Type="int" Nullable="false" />
+    <Property Name="FIOClient" Type="varchar" MaxLength="200" />
+    <Property Name="CodeReceipt" Type="int" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderComposition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PointOfIssue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Index" Type="int" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Street" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="House" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Article" />
+    </Key>
+    <Property Name="Article" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Measure" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="MaxSale" Type="int" Nullable="false" />
+    <Property Name="Maker" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Provider" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Category" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Sale" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="Image" Type="image" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Surname" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Role" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Order__PointOfIs__286302EC">
+    <End Role="PointOfIssue" Type="Self.PointOfIssue" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PointOfIssue">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="PointOfIssueId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderComp__Order__2E1BDC42">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderComposition" Type="Self.OrderComposition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderComposition">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderComp__Produ__2D27B809">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="OrderComposition" Type="Self.OrderComposition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Article" />
+      </Principal>
+      <Dependent Role="OrderComposition">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище PerfumerModelContainer">
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderComposition" EntityType="Self.OrderComposition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PointOfIssue" EntityType="Self.PointOfIssue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Order__PointOfIs__286302EC" Association="Self.FK__Order__PointOfIs__286302EC">
+      <End Role="PointOfIssue" EntitySet="PointOfIssue" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderComp__Order__2E1BDC42" Association="Self.FK__OrderComp__Order__2E1BDC42">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderComposition" EntitySet="OrderComposition" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderComp__Produ__2D27B809" Association="Self.FK__OrderComp__Produ__2D27B809">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="OrderComposition" EntitySet="OrderComposition" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
